@@ -1,63 +1,47 @@
-:root {
-  --btn-radius: 12px;
-  --btn-fw: 600;
-  --btn-tr: 140ms ease;
-
-  --c-primary: #2563eb;
-  --c-primary-600: #1d4ed8;
-  --c-secondary: #334155;
-  --c-secondary-600: #1f2937;
-  --c-danger: #dc2626;
-  --c-danger-600: #b91c1c;
-  --c-white: #ffffff;
-}
+@use "../../styles/tokens" as *;
+@use "../../styles/mixins" as m;
 
 .root {
   appearance: none;
   border: none;
-  border-radius: var(--btn-radius);
-  font-weight: var(--btn-fw);
+  border-radius: $btn-radius;
+  font-weight: $btn-fw;
   cursor: pointer;
-  transition:
-    background-color var(--btn-tr),
-    color var(--btn-tr),
-    box-shadow var(--btn-tr),
-    opacity var(--btn-tr),
-    transform var(--btn-tr);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: .5rem;
-  line-height: 1;
   text-decoration: none;
   user-select: none;
+  transition:
+    background-color $btn-tr,
+    color $btn-tr,
+    box-shadow $btn-tr,
+    opacity $btn-tr,
+    transform $btn-tr;
+  @include m.motion-safe;
 }
 
-/* Rozmiary */
-.sm { font-size: .875rem; padding: .5rem .9rem; }
-.md { font-size: 1rem;    padding: .7rem 1.1rem; }
-.lg { font-size: 1.125rem; padding: .9rem 1.3rem; }
+/* rozmiary */
+.sm { @include m.btn-size(.875rem, .5rem, .9rem); }
+.md { @include m.btn-size(1rem, .7rem, 1.1rem); }
+.lg { @include m.btn-size(1.125rem, .9rem, 1.3rem); }
 
-/* Warianty */
-.primary {
-  background: var(--c-primary);
-  color: var(--c-white);
-}
-.primary:hover { background: var(--c-primary-600); }
+/* warianty */
+.primary   { @include m.btn-variant($primary,   $primary-600); }
+.secondary { @include m.btn-variant($secondary, $secondary-600); }
+.danger    { @include m.btn-variant($danger,    $danger-600); }
 
-.secondary {
-  background: var(--c-secondary);
-  color: var(--c-white);
-}
-.secondary:hover { background: var(--c-secondary-600); }
+/* focus ring per wariant */
+.root[data-variant="primary"]:focus-visible   { @include m.focus-ring($primary); }
+.root[data-variant="secondary"]:focus-visible { @include m.focus-ring($secondary); }
+.root[data-variant="danger"]:focus-visible    { @include m.focus-ring($danger); }
 
-.danger {
-  background: var(--c-danger);
-  color: var(--c-white);
-}
-.danger:hover { background: var(--c-danger-600); }
-
-/* Stany */
-.root:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(37,99,235,.3); }
+/* disabled */
 .isDisabled,
-.root:disabled { opacity: .6; cursor: not-allowed; }
+.root:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+  transform: none;
+  pointer-events: none;
+}
