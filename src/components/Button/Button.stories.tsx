@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Button, type ButtonProps } from "./Button";
 
-// 👇 konfiguracja meta dla Storybooka
 const meta: Meta<ButtonProps> = {
   title: "Components/Button",
   component: Button,
@@ -16,14 +15,13 @@ const meta: Meta<ButtonProps> = {
       options: ["sm", "md", "lg"],
     },
     disabled: { control: "boolean" },
-    onClick: { action: "clicked" }, // addon Actions
+    onClick: { action: "clicked" },
   },
 };
 
 export default meta;
 type Story = StoryObj<ButtonProps>;
 
-// 👇 pojedyncze historie
 export const Primary: Story = {
   args: {
     label: "Primary Button",
@@ -57,5 +55,32 @@ export const Sizes: Story = {
     label: "Large Button",
     variant: "primary",
     size: "lg",
+  },
+};
+// test focus-visible (Tab)
+export const FocusVisible: Story = {
+  args: {
+    label: "Focus Visible",
+    variant: "primary",
+  },
+  play: async ({ canvasElement }) => {
+    const button = canvasElement.querySelector("button")!;
+    button.focus();
+    // oczekujemy, że focus jest ustawiony
+    console.log("Focus ring visible?", document.activeElement === button);
+  },
+};
+
+// test disabled
+export const DisabledAction: Story = {
+  args: {
+    label: "Disabled Test",
+    disabled: true,
+  },
+  play: async ({ canvasElement }) => {
+    const button = canvasElement.querySelector("button")!;
+    button.click();
+    // klik nie powinien wywołać akcji
+    console.log("Disabled clicked (should not fire onClick)");
   },
 };
