@@ -1,0 +1,23 @@
+@use "sass:color";
+
+/// Promienie, typografia, animacje
+$btn-radius: 12px;
+$btn-fw: 600;
+$btn-tr: 140ms ease;
+
+/// Kolory (sprawdzone WCAG ≥ 4.5:1 dla #fff na tle)
+$white: #ffffff;
+
+$primary: #2563eb;      // contrast ~5.17:1
+$primary-600: #1d4ed8;  // ~6.70:1
+
+$secondary: #334155;    // ~10.35:1
+$secondary-600: #1f2937; // ~14.68:1
+
+$danger: #dc2626;       // ~4.83:1
+$danger-600: #b91c1c;   // ~6.47:1
+
+// Focus ring (półprzezroczysty odcień koloru bazowego)
+@function focus-ring-color($base) {
+  @return color.change($base, $alpha: 0.35);
+}
